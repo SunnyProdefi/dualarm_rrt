@@ -143,7 +143,7 @@ def test_robot_informed_rrt_star():
 if __name__ == "__main__":
     pool = multiprocessing.Pool()  # 创建进程池以支持并发执行
 
-    for i in range(10):
+    for i in range(1):
         test_robot_rrt()  # 测试标准RRT算法
         # test_robot_rrt_star()  # 测试RRT*算法（被注释掉了）
         # test_robot_informed_rrt_star()  # 测试Informed RRT*算法（被注释掉了）
