@@ -18,12 +18,12 @@ class RobotRRTParameter(RRTParameter):
         # 初始化函数，接收机器人起始位置、目标位置、机器人对象及RRT算法参数
         super().__init__(start, goal, expand_dis, goal_sample_rate, max_iter, radius, animation)
         # 调用父类的初始化方法，并传入RRT算法的参数
-        self.__robot = copy.deepcopy(robot)  # 深复制传入的机器人对象，避免直接修改原始对象
+        self.__robot = robot # 深复制传入的机器人对象，避免直接修改原始对象
 
     @property
     def robot(self):
         # 机器人属性的getter方法
-        return copy.deepcopy(self.__robot)  # 返回机器人对象的深复制
+        return self.__robot  # 返回机器人对象的深复制
 
     def create_check_collision(self, rrt_map: RRTMap) -> ICheckCollision:
         # 重写create_check_collision方法，用于创建针对机器人的碰撞检测对象

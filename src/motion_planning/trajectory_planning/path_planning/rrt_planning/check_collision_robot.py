@@ -16,7 +16,7 @@ class CheckCollisionRobot(CheckCollision):  # 定义CheckCollisionRobot类，继
     def __init__(self, obstacles: Union[List, Tuple], expand_dis: float, robot: Robot) -> None:
         super().__init__(obstacles)  # 调用父类构造函数，初始化障碍物列表
         self.__expand_dis = expand_dis  # 初始化扩展距离
-        self.__robot = copy.deepcopy(robot)  # 深拷贝robot对象，以避免原始对象被修改
+        self.__robot = robot # 深拷贝robot对象，以避免原始对象被修改
 
     def check_collision(self, line_segment: LineSegment, pool: multiprocessing.Pool = None):
         # 检测给定线段上的机器人是否与障碍物碰撞

@@ -1,5 +1,5 @@
 import copy  # 导入copy模块，用于对象的深复制
-from typing import List  # 从typing模块导入List，用于类型注解
+from typing import List,Tuple  # 从typing模块导入List，用于类型注解
 
 import numpy as np  # 导入numpy库，用于科学计算
 import roboticstoolbox as rtb  # 导入roboticstoolbox库，用于机器人模型和运动学计算
@@ -8,7 +8,7 @@ from spatialmath import SE3  # 导入spatialmath库的SE3，用于三维空间�
 from src.geometry import Geometry, Capsule  # 从src.geometry模块导入Geometry和Capsule类
 # 定义Robot类
 class Robot:
-    def __init__(self, offset_position=(0, 0, 0)):
+    def __init__(self,offset_position: Tuple = (0, 0, 0)):
         # 定义UR5机器人的DH参数
         d1 = 0.163
         d4 = 0.134
