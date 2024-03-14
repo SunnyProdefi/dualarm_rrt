@@ -16,7 +16,8 @@ from mujoco_py import load_model_from_path, MjSim, MjViewer  # 从mujoco_py导�
 from mujoco_py.generated import const  # 从mujoco_py.generated导入const，用于访问MuJoCo的常量
 import multiprocessing  # 导入multiprocessing模块，用于支持并发执行
 
-robot = Robot()  # 实例化Robot类，创建一个机器人对象
+# 实例化Robot类，沿Y轴负方向偏移0.5米
+robot = Robot(offset_position=(0, -0.5, 0))
 
 obstacles = [
     Brick(SE3.Trans(0.5, 0.0, 0.8), np.array([0.4, 0.4, 0.01])),  # 创建一个障碍物，是一个位于特定位置的砖块
@@ -51,7 +52,7 @@ def visualize(rrt_planner):
         return
 
     # 加载模型
-    model = load_model_from_path("G:\\VS_Code_Document\\improved_rrt_robot\\assets\\universal_robots_ur5e\\scene.xml")
+    model = load_model_from_path("G:\\VS_Code_Document\\improved_rrt_robot\\assets\\universal_robots_ur5e\\sceneDualarm.xml")
     # 初始化仿真环境
     sim = MjSim(model)
     # 初始化仿真环境的可视化
@@ -142,10 +143,9 @@ def test_robot_informed_rrt_star():
 # 如果这个脚本是作为主程序运行
 if __name__ == "__main__":
     pool = multiprocessing.Pool()  # 创建进程池以支持并发执行
-
-    for i in range(1):
+    for i in range(100):
         test_robot_rrt()  # 测试标准RRT算法
-        # test_robot_rrt_star()  # 测试RRT*算法（被注释掉了）
-        # test_robot_informed_rrt_star()  # 测试Informed RRT*算法（被注释掉了）
+        # test_robot_rrt_star()  # 测试RRT*算法
+        # test_robot_informed_rrt_star()  # 测试Informed RRT*算法
 
     pool.close()  # 关闭进程池

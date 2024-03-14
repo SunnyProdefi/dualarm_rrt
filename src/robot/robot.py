@@ -6,10 +6,9 @@ import roboticstoolbox as rtb  # 导入roboticstoolbox库，用于机器人模�
 from spatialmath import SE3  # 导入spatialmath库的SE3，用于三维空间的刚体变换
 
 from src.geometry import Geometry, Capsule  # 从src.geometry模块导入Geometry和Capsule类
-
 # 定义Robot类
 class Robot:
-    def __init__(self):
+    def __init__(self, offset_position=(0, 0, 0)):
         # 定义UR5机器人的DH参数
         d1 = 0.163
         d4 = 0.134
@@ -27,7 +26,6 @@ class Robot:
         a_array = [0.0, 0.0, a3, a4, 0.0, 0.0]
         d_array = [d1, 0.0, 0.0, d4, d5, d6]
         theta_array = [0.0, -np.pi / 2, 0.0, np.pi / 2, 0.0, 0.0]
-        tool = SE3.Trans(0.0, 0.0, 0.2)  # 工具的变换矩阵
 
         # 创建机器人模型
         links = []
@@ -40,6 +38,9 @@ class Robot:
         self.a_array = a_array
         self.d_array = d_array
         self.theta_array = theta_array
+
+        # 存储偏移量
+        self.offset_position = offset_position
 
     def fkine(self, q) -> SE3:
         # 计算给定关节角度的正运动学
@@ -74,13 +75,11 @@ class Robot:
     def get_geometries(self) -> List[Geometry]:
         # 初始化变换矩阵列表
         Ts = []
-        # 初始化为单位矩阵
-        T = SE3()
+        # 初始化为单位矩阵，并应用偏移
+        T = SE3.Trans(self.offset_position)
         # 遍历所有关节
         for i in range(self.dof):
-            # 根据MDH参数计算当前关节的变换矩阵，并累乘到总变换矩阵
             T = T * Robot.transform_mdh(self.alpha_array[i], self.a_array[i], self.d_array[i], self.theta_array[i], self.q0[i])
-            # 将计算得到的变换矩阵添加到列表中
             Ts.append(T)
 
         # 计算每个部分的几何形状并初始化
@@ -139,10 +138,11 @@ class Robot:
 
 # 测试代码
 if __name__ == '__main__':
-    ur_robot = Robot()  # 创建机器人实例
+    ur_robot = Robot(offset_position=(0, -0.5, 0))  # 创建机器人实例
     q0 = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]  # 定义测试用的关节角度
     T1 = ur_robot.fkine(q0)  # 计算正运动学
     print(T1)  # 打印末端执行器的位姿
     ur_robot.move_cartesian(T1)  # 尝试移动到该位姿
     q_new = ur_robot.get_joint()  # 获取新的关节角度
     print(q_new)  # 打印新的关节角度
+    print(ur_robot.get_geometries())  # 打印机器人的几何形状
