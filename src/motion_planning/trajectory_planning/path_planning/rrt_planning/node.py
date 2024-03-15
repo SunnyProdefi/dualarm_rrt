@@ -10,12 +10,12 @@ from src.geometry import Point
 class Node:
 
     @overload
-    def __init__(self, point: Union[np.ndarray, Iterable], cost: float = 0.0, parent: int = -1):
-        ...
+    def __init__(
+        self, point: Union[np.ndarray, Iterable], cost: float = 0.0, parent: int = -1
+    ): ...
 
     @overload
-    def __init__(self, point: Point, cost: float = 0.0, parent: int = -1):
-        ...
+    def __init__(self, point: Point, cost: float = 0.0, parent: int = -1): ...
 
     def __init__(self, point=None, cost=0.0, parent=-1):
         if point is None:

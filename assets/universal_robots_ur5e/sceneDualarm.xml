@@ -1,28 +1,37 @@
-<mujoco model="ur5e scene"> <!-- 定义一个MuJoCo模型，名称为“ur5e scene”。-->
+<mujoco model="ur5e scene">  <!-- 定义一个MuJoCo模型，名称为“ur5e scene”。-->
 
-  <include file="ur5e.xml"/> <!-- 包含另一个文件“ur5e.xml”，通常这个文件定义了UR5e机械臂的模型。-->
-  <include file="ur5eCopy.xml"/> <!-- 包含另一个文件“ur5e.xml”，通常这个文件定义了UR5e机械臂的模型。-->
-  <statistic center="0.3 0 0.4" extent="0.8"/> <!-- 定义场景的统计中心和范围，用于相机自动对焦等。-->
+  <include file="ur5e.xml"/>
+  <!-- 包含另一个文件“ur5e.xml”，通常这个文件定义了UR5e机械臂的模型。-->
+  <include file="ur5eCopy.xml"/>
+  <!-- 包含另一个文件“ur5e.xml”，通常这个文件定义了UR5e机械臂的模型。-->
+  <statistic center="0.3 0 0.4" extent="0.8"/>
+  <!-- 定义场景的统计中心和范围，用于相机自动对焦等。-->
 
-  <visual> <!-- 视觉设置，影响仿真的渲染效果。-->
-    <headlight diffuse="0.6 0.6 0.6" ambient="0.1 0.1 0.1" specular="0 0 0"/> <!-- 头灯的设置，包括漫反射、环境光和高光。-->
-    <!-- <rgba haze="0.15 0.25 0.35 1"/> --> <!-- 雾化效果的RGBA颜色设置，已被注释掉。-->
-    <!-- <global azimuth="120" elevation="-20"/> --> <!-- 全局光照设置，包括方位角和高度角，已被注释掉。-->
+  <visual>    <!-- 视觉设置，影响仿真的渲染效果。-->
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.1 0.1 0.1" specular="0 0 0"/>
+    <!-- 头灯的设置，包括漫反射、环境光和高光。-->
+    <!-- <rgba haze="0.15 0.25 0.35 1"/> -->    <!-- 雾化效果的RGBA颜色设置，已被注释掉。-->
+    <!-- <global azimuth="120" elevation="-20"/> -->    <!-- 全局光照设置，包括方位角和高度角，已被注释掉。-->
   </visual>
 
-  <asset> <!-- 资产定义区，包括贴图和材料。-->
-    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/> <!-- 天空盒纹理，使用渐变色。-->
-    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
-      markrgb="0.8 0.8 0.8" width="300" height="300"/> <!-- 地面纹理，棋盘格样式。-->
-    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/> <!-- 地面材料，使用上面定义的地面纹理。-->
+  <asset>    <!-- 资产定义区，包括贴图和材料。-->
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <!-- 天空盒纹理，使用渐变色。-->
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <!-- 地面纹理，棋盘格样式。-->
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+    <!-- 地面材料，使用上面定义的地面纹理。-->
   </asset>
 
-  <worldbody> <!-- 世界主体部分，包含所有物理实体。-->
-    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/> <!-- 定向光源设置。-->
-    <geom name="floor" size="1 1 0.05" type="plane" material="groundplane"/> <!-- 地面几何体，使用“groundplane”材料。-->
+  <worldbody>    <!-- 世界主体部分，包含所有物理实体。-->
+    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
+    <!-- 定向光源设置。-->
+    <geom name="floor" size="1 1 0.05" type="plane" material="groundplane"/>
+    <!-- 地面几何体，使用“groundplane”材料。-->
 
-    <body name="object1" pos="0 0 0"> <!-- 定义一个名为“object1”的物体。-->
-      <geom type="box" pos="0.5 0 0.8" size="0.2 0.2 0.005"/> <!-- “object1”内部的几何体，一个盒子。-->
+    <body name="object1" pos="0 0 0">      <!-- 定义一个名为“object1”的物体。-->
+      <geom type="box" pos="0.5 0 0.8" size="0.2 0.2 0.005"/>
+      <!-- “object1”内部的几何体，一个盒子。-->
     </body>
   </worldbody>
 

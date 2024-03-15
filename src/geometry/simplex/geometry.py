@@ -10,12 +10,10 @@ from src.constanst import MathConst
 class Geometry(ABC):
 
     @overload
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     @overload
-    def __init__(self, t) -> None:
-        ...
+    def __init__(self, t) -> None: ...
 
     def __init__(self, t=None) -> None:
         super().__init__()

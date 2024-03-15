@@ -3,24 +3,43 @@ import os  # 导入os模块，用于操作系统功能，如添加DLL目录
 import numpy as np  # 导入numpy库，用于进行科学计算
 from spatialmath import SE3  # 从spatialmath库导入SE3，用于表示三维空间的刚体变换
 import sys  # 导入sys模块，用于访问与Python解释器紧密相关的变量和函数
-sys.path.append("G://VS_Code_Document//improved_rrt_robot")  # 将自定义模块的路径添加到系统路径
+
+sys.path.append(
+    "G://VS_Code_Document//improved_rrt_robot"
+)  # 将自定义模块的路径添加到系统路径
 
 from src.robot import Robot  # 从src目录的robot模块导入Robot类
 from src.geometry import Brick  # 从src目录的geometry模块导入Brick类
-from src.motion_planning import RobotRRTParameter, RRTMap, BlendPlanner, RRTPlanner, RRTStarPlanner, \
-    InformedRRTStarPlanner  # 从src目录的motion_planning模块导入多个路径规划相关的类
+from src.motion_planning import (
+    RobotRRTParameter,
+    RRTMap,
+    BlendPlanner,
+    RRTPlanner,
+    RRTStarPlanner,
+    InformedRRTStarPlanner,
+)  # 从src目录的motion_planning模块导入多个路径规划相关的类
 
-os.add_dll_directory("C://Users//10501/.mujoco//mjpro150//bin")  # 添加MuJoCo库的DLL目录到系统路径
+os.add_dll_directory(
+    "C://Users//10501/.mujoco//mjpro150//bin"
+)  # 添加MuJoCo库的DLL目录到系统路径
 
-from mujoco_py import load_model_from_path, MjSim, MjViewer  # 从mujoco_py导入模型加载、仿真和可视化相关的类
-from mujoco_py.generated import const  # 从mujoco_py.generated导入const，用于访问MuJoCo的常量
+from mujoco_py import (
+    load_model_from_path,
+    MjSim,
+    MjViewer,
+)  # 从mujoco_py导入模型加载、仿真和可视化相关的类
+from mujoco_py.generated import (
+    const,
+)  # 从mujoco_py.generated导入const，用于访问MuJoCo的常量
 import multiprocessing  # 导入multiprocessing模块，用于支持并发执行
 
 # 实例化Robot类，沿Y轴负方向偏移0.5米
 robot = Robot(offset_position=(0, -0.5, 0))
 
 obstacles = [
-    Brick(SE3.Trans(0.5, 0.0, 0.8), np.array([0.4, 0.4, 0.01])),  # 创建一个障碍物，是一个位于特定位置的砖块
+    Brick(
+        SE3.Trans(0.5, 0.0, 0.8), np.array([0.4, 0.4, 0.01])
+    ),  # 创建一个障碍物，是一个位于特定位置的砖块
 ]
 
 rrt_map = RRTMap(
@@ -30,14 +49,21 @@ rrt_map = RRTMap(
         (-np.pi, np.pi),
         (-np.pi, np.pi),
         (-np.pi, np.pi),
-        (-np.pi / 2, np.pi / 2)
+        (-np.pi / 2, np.pi / 2),
     ],
-    obstacles=obstacles)  # 创建一个RRTMap对象，定义了机器人操作空间和障碍物
+    obstacles=obstacles,
+)  # 创建一个RRTMap对象，定义了机器人操作空间和障碍物
 
-rrt_parameter = RobotRRTParameter(start=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-                                  goal=[0.0, 0.0, np.pi / 2, 0.0, -np.pi / 2, 0.0],
-                                  robot=robot, expand_dis=np.pi / 12, max_iter=500, radius=5.0)
+rrt_parameter = RobotRRTParameter(
+    start=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    goal=[0.0, 0.0, np.pi / 2, 0.0, -np.pi / 2, 0.0],
+    robot=robot,
+    expand_dis=np.pi / 12,
+    max_iter=500,
+    radius=5.0,
+)
 # 创建一个RobotRRTParameter对象，定义了起始点、目标点、机器人、扩展距离、最大迭代次数和搜索半径
+
 
 def visualize(rrt_planner):
     # 从路径规划器获取路径参数
@@ -52,28 +78,19 @@ def visualize(rrt_planner):
         return
 
     # 加载模型
-    model = load_model_from_path("G:\\VS_Code_Document\\improved_rrt_robot\\assets\\universal_robots_ur5e\\sceneDualarm.xml")
-    # 初始化仿真环境
-    sim = MjSim(model)
-    # 初始化仿真环境的可视化
-    viewer = MjViewer(sim)
+    model = load_model_from_path(
+        "G:\\VS_Code_Document\\improved_rrt_robot\\assets\\universal_robots_ur5e\\sceneDualarm.xml"
+    )
 
-    # 设置机器人的自由度
-    dof = 6
-
-    # 设置用于插值的样本数
-    num = 1001
-    # 生成等间隔的样本点
-    ss = np.linspace(0.0, 1.0, num)
-    # 初始化用于存储关节位置的矩阵
-    joints = np.zeros((num, dof))
-
-    # 初始化步进变量
-    s_step = 0
-    # 初始化方向标志
-    forward = True
-    # 初始化计数器
-    j = 0
+    sim = MjSim(model)  # 初始化仿真环境
+    viewer = MjViewer(sim)  # 初始化仿真环境的可视化
+    dof = 6  # 设置机器人的自由度
+    num = 1001  # 设置用于插值的样本数
+    ss = np.linspace(0.0, 1.0, num)  # 生成等间隔的样本点
+    joints = np.zeros((num, dof))  # 初始化用于存储关节位置的矩阵
+    s_step = 0  # 初始化步进变量
+    forward = True  # 初始化方向标志
+    j = 0  # 初始化计数器
 
     # 遍历所有样本点，进行插值
     for i, si in enumerate(ss):
@@ -103,8 +120,12 @@ def visualize(rrt_planner):
 
         # 在初始和终止位置添加标记
         for com in coms:
-            viewer.add_marker(pos=com, size=np.array([0.01, 0.01, 0.01]), rgba=np.array([1., 0, 0, 1]),
-                              type=const.GEOM_SPHERE)
+            viewer.add_marker(
+                pos=com,
+                size=np.array([0.01, 0.01, 0.01]),
+                rgba=np.array([1.0, 0, 0, 1]),
+                type=const.GEOM_SPHERE,
+            )
 
         # 更新计数器和步进变量
         j += 1
@@ -119,12 +140,14 @@ def visualize(rrt_planner):
                 if s_step == 0:
                     forward = True
 
+
 # 定义测试RRT算法的函数
 def test_robot_rrt():
     # 初始化RRT路径规划器
     rrt_planner = RRTPlanner(rrt_map, rrt_parameter)
     # 调用可视化函数
     visualize(rrt_planner)
+
 
 # 定义测试RRT*算法的函数
 def test_robot_rrt_star():
@@ -133,12 +156,14 @@ def test_robot_rrt_star():
     # 调用可视化函数
     visualize(rrt_planner)
 
+
 # 定义测试Informed RRT*算法的函数
 def test_robot_informed_rrt_star():
     # 初始化Informed RRT*路径规划器
     rrt_planner = InformedRRTStarPlanner(rrt_map, rrt_parameter, pool)
     # 调用可视化函数
     visualize(rrt_planner)
+
 
 # 如果这个脚本是作为主程序运行
 if __name__ == "__main__":

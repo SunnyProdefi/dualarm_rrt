@@ -5,14 +5,24 @@ import numpy as np  # 导入numpy库，用于科学计算
 
 from .i_check_collision import ICheckCollision  # 从当前目录导入ICheckCollision接口
 from .rrt_map import RRTMap  # 从当前目录导入RRTMap类，表示RRT算法的地图
-from .check_collision import CheckCollision  # 从当前目录导入CheckCollision类，用于碰撞检测
+from .check_collision import (
+    CheckCollision,
+)  # 从当前目录导入CheckCollision类，用于碰撞检测
+
 
 # 定义RRTParameter类，存储RRT算法的参数
 class RRTParameter:
 
-    def __init__(self, start: Union[np.ndarray, Iterable], goal: Union[np.ndarray, Iterable],
-                 expand_dis: float = 1.0, goal_sample_rate: float = 10.0, max_iter: int = 100,
-                 radius: float = 10.0, animation: bool = False) -> None:
+    def __init__(
+        self,
+        start: Union[np.ndarray, Iterable],
+        goal: Union[np.ndarray, Iterable],
+        expand_dis: float = 1.0,
+        goal_sample_rate: float = 10.0,
+        max_iter: int = 100,
+        radius: float = 10.0,
+        animation: bool = False,
+    ) -> None:
         super().__init__()  # 调用父类的初始化方法
         self.__start = np.array(start)  # 将起始点转换为numpy数组
         self.__goal = np.array(goal)  # 将目标点转换为numpy数组
@@ -53,4 +63,6 @@ class RRTParameter:
 
     def create_check_collision(self, rrt_map: RRTMap) -> ICheckCollision:
         # 创建并返回一个碰撞检测对象，用于检测路径上的碰撞
-        return CheckCollision(rrt_map.obstacles)  # 根据地图中的障碍物信息创建CheckCollision实例
+        return CheckCollision(
+            rrt_map.obstacles
+        )  # 根据地图中的障碍物信息创建CheckCollision实例

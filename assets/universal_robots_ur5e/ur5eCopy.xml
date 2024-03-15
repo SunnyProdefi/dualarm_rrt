@@ -1,14 +1,13 @@
 <mujoco model="ur5eCopy">
   <compiler angle="radian" meshdir="assets"/>
 
-<!--  <option integrator="implicitfast"/>-->
+  <!--  <option integrator="implicitfast"/>-->
 
   <default>
     <default class="ur5eCopy">
       <material specular="0.5" shininess="0.25"/>
       <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1"/>
-      <general gaintype="fixed" biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="2000" biasprm="0 -2000 -400"
-        forcerange="-150 150"/>
+      <general gaintype="fixed" biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="2000" biasprm="0 -2000 -400" forcerange="-150 150"/>
       <default class="size3Copy">
         <default class="size3Copy_limited">
           <joint range="-3.1415 3.1415"/>
@@ -106,8 +105,7 @@
                 <geom class="collisionCopy" size="0.04 0.06" pos="0 0 0.04"/>
                 <geom class="collisionCopy" pos="0 0.02 0.1" quat="1 1 0 0" size="0.04 0.04"/>
                 <body name="wrist_3_link_arm2" pos="0 0 0.1">
-                  <inertial mass="0.1889" pos="0 0.0771683 0" quat="1 0 0 1"
-                    diaginertia="0.000132134 9.90863e-05 9.90863e-05"/>
+                  <inertial mass="0.1889" pos="0 0.0771683 0" quat="1 0 0 1" diaginertia="0.000132134 9.90863e-05 9.90863e-05"/>
                   <joint name="wrist_3_joint_arm2" class="size1Copy"/>
                   <geom material="linkgray_arm2" mesh="wrist3" class="visualCopy"/>
                   <geom class="eef_collisionCopy" pos="0 0.08 0" quat="1 1 0 0" size="0.04 0.02"/>

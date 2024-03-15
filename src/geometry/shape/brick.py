@@ -20,42 +20,68 @@ class Brick(Geometry3D, Support):
 
     @property
     def points(self) -> List[Point]:
-        return [Point(
-            (self.base * SE3.Trans(
-                *(self.__dimensions * np.array([i % 2 - 0.5, i % 4 // 2 - 0.5, i // 4 - 0.5])))).t
-        ) for i in range(8)]
+        return [
+            Point(
+                (
+                    self.base
+                    * SE3.Trans(
+                        *(
+                            self.__dimensions
+                            * np.array([i % 2 - 0.5, i % 4 // 2 - 0.5, i // 4 - 0.5])
+                        )
+                    )
+                ).t
+            )
+            for i in range(8)
+        ]
 
     @property
     def xn_yn_zn_point(self) -> Point:
-        return Point(np.squeeze(self.base * (self.__dimensions * np.array([-1, -1, -1]) * 0.5)))
+        return Point(
+            np.squeeze(self.base * (self.__dimensions * np.array([-1, -1, -1]) * 0.5))
+        )
 
     @property
     def xp_yn_zn_point(self) -> Point:
-        return Point(np.squeeze(self.base * (self.__dimensions * np.array([1, -1, -1]) * 0.5)))
+        return Point(
+            np.squeeze(self.base * (self.__dimensions * np.array([1, -1, -1]) * 0.5))
+        )
 
     @property
     def xn_yp_zn_point(self) -> Point:
-        return Point(np.squeeze(self.base * (self.__dimensions * np.array([-1, 1, -1]) * 0.5)))
+        return Point(
+            np.squeeze(self.base * (self.__dimensions * np.array([-1, 1, -1]) * 0.5))
+        )
 
     @property
     def xp_yp_zn_point(self) -> Point:
-        return Point(np.squeeze(self.base * (self.__dimensions * np.array([1, 1, -1]) * 0.5)))
+        return Point(
+            np.squeeze(self.base * (self.__dimensions * np.array([1, 1, -1]) * 0.5))
+        )
 
     @property
     def xn_yn_zp_point(self) -> Point:
-        return Point(np.squeeze(self.base * (self.__dimensions * np.array([-1, -1, 1]) * 0.5)))
+        return Point(
+            np.squeeze(self.base * (self.__dimensions * np.array([-1, -1, 1]) * 0.5))
+        )
 
     @property
     def xp_yn_zp_point(self) -> Point:
-        return Point(np.squeeze(self.base * (self.__dimensions * np.array([1, -1, 1]) * 0.5)))
+        return Point(
+            np.squeeze(self.base * (self.__dimensions * np.array([1, -1, 1]) * 0.5))
+        )
 
     @property
     def xn_yp_zp_point(self) -> Point:
-        return Point(np.squeeze(self.base * (self.__dimensions * np.array([-1, 1, 1]) * 0.5)))
+        return Point(
+            np.squeeze(self.base * (self.__dimensions * np.array([-1, 1, 1]) * 0.5))
+        )
 
     @property
     def xp_yp_zp_point(self) -> Point:
-        return Point(np.squeeze(self.base * (self.__dimensions * np.array([1, 1, 1]) * 0.5)))
+        return Point(
+            np.squeeze(self.base * (self.__dimensions * np.array([1, 1, 1]) * 0.5))
+        )
 
     @property
     def yn_zn_line_segment(self) -> LineSegment:
@@ -107,32 +133,48 @@ class Brick(Geometry3D, Support):
 
     @property
     def xn_plane(self) -> Plane:
-        center = self.get_t() + np.array(self.__dimensions * np.array([-1.0, 0.0, 0.0])) * 0.5
+        center = (
+            self.get_t()
+            + np.array(self.__dimensions * np.array([-1.0, 0.0, 0.0])) * 0.5
+        )
         return Plane(SE3.Trans(*center) * SE3.Ry(-np.pi / 2))
 
     @property
     def xp_plane(self) -> Plane:
-        center = self.get_t() + np.array(self.__dimensions * np.array([1.0, 0.0, 0.0])) * 0.5
+        center = (
+            self.get_t() + np.array(self.__dimensions * np.array([1.0, 0.0, 0.0])) * 0.5
+        )
         return Plane(SE3.Trans(*center) * SE3.Ry(np.pi / 2))
 
     @property
     def yn_plane(self) -> Plane:
-        center = self.get_t() + np.array(self.__dimensions * np.array([0.0, -1.0, 0.0])) * 0.5
+        center = (
+            self.get_t()
+            + np.array(self.__dimensions * np.array([0.0, -1.0, 0.0])) * 0.5
+        )
         return Plane(SE3.Trans(*center) * SE3.Rx(np.pi / 2))
 
     @property
     def yp_plane(self) -> Plane:
-        center = self.get_t() + np.array(self.__dimensions * np.array([0.0, -1.0, 0.0])) * 0.5
+        center = (
+            self.get_t()
+            + np.array(self.__dimensions * np.array([0.0, -1.0, 0.0])) * 0.5
+        )
         return Plane(SE3.Trans(*center) * SE3.Rx(-np.pi / 2))
 
     @property
     def zn_plane(self) -> Plane:
-        center = self.get_t() + np.array(self.__dimensions * np.array([0.0, 0.0, -1.0])) * 0.5
+        center = (
+            self.get_t()
+            + np.array(self.__dimensions * np.array([0.0, 0.0, -1.0])) * 0.5
+        )
         return Plane(SE3.Trans(*center) * SE3.Rx(np.pi))
 
     @property
     def zp_plane(self) -> Plane:
-        center = self.get_t() + np.array(self.__dimensions * np.array([0.0, 0.0, 1.0])) * 0.5
+        center = (
+            self.get_t() + np.array(self.__dimensions * np.array([0.0, 0.0, 1.0])) * 0.5
+        )
         return Plane(SE3.Trans(*center))
 
     def plot(self, ax, c=None):
@@ -142,15 +184,24 @@ class Brick(Geometry3D, Support):
             [self.yn_zn_line_segment, self.yn_zp_line_segment],
             [self.yp_zn_line_segment, self.yp_zp_line_segment],
             [self.xn_zn_line_segment, self.xp_zn_line_segment],
-            [self.xn_zp_line_segment, self.xp_zp_line_segment]
+            [self.xn_zp_line_segment, self.xp_zp_line_segment],
         ]
 
         for plane in planes:
             points = [
-                np.array([
-                    [plane[0].get_point0().get_t()[i], plane[0].get_point1().get_t()[i]],
-                    [plane[1].get_point0().get_t()[i], plane[1].get_point1().get_t()[i]]
-                ]) for i in range(3)
+                np.array(
+                    [
+                        [
+                            plane[0].get_point0().get_t()[i],
+                            plane[0].get_point1().get_t()[i],
+                        ],
+                        [
+                            plane[1].get_point0().get_t()[i],
+                            plane[1].get_point1().get_t()[i],
+                        ],
+                    ]
+                )
+                for i in range(3)
             ]
 
-            ax.plot_surface(*points, alpha=0.5, color='b' if c is None else c)
+            ax.plot_surface(*points, alpha=0.5, color="b" if c is None else c)

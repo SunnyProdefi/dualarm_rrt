@@ -1,14 +1,16 @@
 import copy  # 导入copy模块，用于对象的深复制
-from typing import List,Tuple  # 从typing模块导入List，用于类型注解
+from typing import List, Tuple  # 从typing模块导入List，用于类型注解
 
 import numpy as np  # 导入numpy库，用于科学计算
 import roboticstoolbox as rtb  # 导入roboticstoolbox库，用于机器人模型和运动学计算
 from spatialmath import SE3  # 导入spatialmath库的SE3，用于三维空间的刚体变换
 
 from src.geometry import Geometry, Capsule  # 从src.geometry模块导入Geometry和Capsule类
+
+
 # 定义Robot类
 class Robot:
-    def __init__(self,offset_position: Tuple = (0, 0, 0)):
+    def __init__(self, offset_position: Tuple = (0, 0, 0)):
         # 定义UR5机器人的DH参数
         d1 = 0.163
         d4 = 0.134
@@ -30,7 +32,15 @@ class Robot:
         # 创建机器人模型
         links = []
         for i in range(6):
-            links.append(rtb.DHLink(d=d_array[i], alpha=alpha_array[i], a=a_array[i], offset=theta_array[i], mdh=True))
+            links.append(
+                rtb.DHLink(
+                    d=d_array[i],
+                    alpha=alpha_array[i],
+                    a=a_array[i],
+                    offset=theta_array[i],
+                    mdh=True,
+                )
+            )
         self.robot = rtb.DHRobot(links)
 
         # 存储DH参数
@@ -70,7 +80,10 @@ class Robot:
 
     def get_cartesian(self):
         # 获取当前末端执行器的位姿
-        return self.fkine(self.q0)
+        T = self.fkine(self.q0)
+        # 将偏移量加到末端执行器的位置上
+        T.t = T.t + np.array(self.offset_position)
+        return T
 
     def get_geometries(self) -> List[Geometry]:
         # 初始化变换矩阵列表
@@ -79,7 +92,13 @@ class Robot:
         T = SE3.Trans(self.offset_position)
         # 遍历所有关节
         for i in range(self.dof):
-            T = T * Robot.transform_mdh(self.alpha_array[i], self.a_array[i], self.d_array[i], self.theta_array[i], self.q0[i])
+            T = T * Robot.transform_mdh(
+                self.alpha_array[i],
+                self.a_array[i],
+                self.d_array[i],
+                self.theta_array[i],
+                self.q0[i],
+            )
             Ts.append(T)
 
         # 计算每个部分的几何形状并初始化
@@ -106,14 +125,15 @@ class Robot:
 
     def __getstate__(self):
         # 获取对象状态，用于序列化
-        state = {"dof": self.dof,  # 自由度
-                 "q0": self.q0,  # 当前关节角度
-                 "alpha_array": self.alpha_array,  # α数组
-                 "a_array": self.a_array,  # a数组
-                 "d_array": self.d_array,  # d数组
-                 "theta_array": self.theta_array,  # θ数组
-                 # "robot": self.robot  # 机器人模型，此处被注释掉，因为模型可能不易于直接序列化
-                 }
+        state = {
+            "dof": self.dof,  # 自由度
+            "q0": self.q0,  # 当前关节角度
+            "alpha_array": self.alpha_array,  # α数组
+            "a_array": self.a_array,  # a数组
+            "d_array": self.d_array,  # d数组
+            "theta_array": self.theta_array,  # θ数组
+            # "robot": self.robot  # 机器人模型，此处被注释掉，因为模型可能不易于直接序列化
+        }
         return state
 
     def __setstate__(self, state):
@@ -128,7 +148,14 @@ class Robot:
         links = []
         for i in range(6):
             links.append(
-                rtb.DHLink(d=self.d_array[i], alpha=self.alpha_array[i], a=self.a_array[i], offset=self.theta_array[i], mdh=True))
+                rtb.DHLink(
+                    d=self.d_array[i],
+                    alpha=self.alpha_array[i],
+                    a=self.a_array[i],
+                    offset=self.theta_array[i],
+                    mdh=True,
+                )
+            )
         self.robot = rtb.DHRobot(links)
 
     @staticmethod
@@ -136,8 +163,9 @@ class Robot:
         # 根据MDH参数进行变换，返回SE3类型的变换矩阵
         return SE3.Rx(alpha) * SE3.Trans(a, 0, d) * SE3.Rz(theta + q)
 
+
 # 测试代码
-if __name__ == '__main__':
+if __name__ == "__main__":
     ur_robot = Robot(offset_position=(0, -0.5, 0))  # 创建机器人实例
     q0 = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]  # 定义测试用的关节角度
     T1 = ur_robot.fkine(q0)  # 计算正运动学
