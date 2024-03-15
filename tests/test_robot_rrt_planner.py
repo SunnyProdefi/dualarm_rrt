@@ -40,7 +40,7 @@ robot2 = Robot(offset_position=(0, 0.5, 0))
 
 obstacles = [
     Brick(
-        SE3.Trans(0.5, 0.0, 0.8), np.array([0.2, 0.8, 0.01])
+        SE3.Trans(0.5, 0.0, 0.8), np.array([0.4, 0.8, 0.01])
     ),  # 创建一个障碍物，是一个位于特定位置的砖块
 ]
 
