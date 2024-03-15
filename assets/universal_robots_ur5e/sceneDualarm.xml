@@ -30,7 +30,7 @@
     <!-- 地面几何体，使用“groundplane”材料。-->
 
     <body name="object1" pos="0 0 0">      <!-- 定义一个名为“object1”的物体。-->
-      <geom type="box" pos="0.5 0 0.8" size="0.2 0.2 0.005"/>
+      <geom type="box" pos="0.5 0 0.8" size="0.2 0.8 0.005"/>
       <!-- “object1”内部的几何体，一个盒子。-->
     </body>
   </worldbody>

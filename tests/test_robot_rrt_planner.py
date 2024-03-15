@@ -34,11 +34,13 @@ from mujoco_py.generated import (
 import multiprocessing  # 导入multiprocessing模块，用于支持并发执行
 
 # 实例化Robot类，沿Y轴负方向偏移0.5米
-robot = Robot(offset_position=(0, -0.5, 0))
+robot1 = Robot(offset_position=(0, -0.5, 0))
+# 实例化Robot类，沿Y轴正方向偏移0.5米
+robot2 = Robot(offset_position=(0, 0.5, 0))
 
 obstacles = [
     Brick(
-        SE3.Trans(0.5, 0.0, 0.8), np.array([0.4, 0.4, 0.01])
+        SE3.Trans(0.5, 0.0, 0.8), np.array([0.2, 0.8, 0.01])
     ),  # 创建一个障碍物，是一个位于特定位置的砖块
 ]
 
@@ -50,16 +52,36 @@ rrt_map = RRTMap(
         (-np.pi, np.pi),
         (-np.pi, np.pi),
         (-np.pi / 2, np.pi / 2),
+        (-np.pi / 2, np.pi / 2),
+        (-np.pi / 2, np.pi / 2),
+        (-np.pi, np.pi),
+        (-np.pi, np.pi),
+        (-np.pi, np.pi),
+        (-np.pi / 2, np.pi / 2),
     ],
     obstacles=obstacles,
 )  # 创建一个RRTMap对象，定义了机器人操作空间和障碍物
 
+# 修改RobotRRTParameter对象的实例化，传入机器人列表
 rrt_parameter = RobotRRTParameter(
-    start=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-    goal=[0.0, 0.0, np.pi / 2, 0.0, -np.pi / 2, 0.0],
-    robot=robot,
+    start=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    goal=[
+        0.0,
+        0.0,
+        np.pi / 2,
+        0.0,
+        -np.pi / 2,
+        0.0,
+        0.0,
+        0.0,
+        np.pi / 2,
+        0.0,
+        -np.pi / 2,
+        0.0,
+    ],
+    robots=[robot1, robot2],  # 使用列表传入多个机器人
     expand_dis=np.pi / 12,
-    max_iter=500,
+    max_iter=1000,
     radius=5.0,
 )
 # 创建一个RobotRRTParameter对象，定义了起始点、目标点、机器人、扩展距离、最大迭代次数和搜索半径
@@ -84,7 +106,7 @@ def visualize(rrt_planner):
 
     sim = MjSim(model)  # 初始化仿真环境
     viewer = MjViewer(sim)  # 初始化仿真环境的可视化
-    dof = 6  # 设置机器人的自由度
+    dof = 12  # 设置机器人的自由度
     num = 1001  # 设置用于插值的样本数
     ss = np.linspace(0.0, 1.0, num)  # 生成等间隔的样本点
     joints = np.zeros((num, dof))  # 初始化用于存储关节位置的矩阵
@@ -92,31 +114,47 @@ def visualize(rrt_planner):
     forward = True  # 初始化方向标志
     j = 0  # 初始化计数器
 
-    # 遍历所有样本点，进行插值
+    # 遍历所有样本点，进行插值和设置关节位置
     for i, si in enumerate(ss):
-        qi = blend_planner.interpolate(si)
-        robot.set_joint(qi)
-        joints[i, :] = robot.get_joint()
+        qi = blend_planner.interpolate(si)  # 插值获取当前样本点的关节位置
 
-    # 设置机器人的初始和终止关节位置
-    robot.set_joint(joints[0, :])
-    T0 = robot.get_cartesian()
-    robot.set_joint(joints[-1, :])
-    T1 = robot.get_cartesian()
-    # 获取初始和终止位置的笛卡尔坐标
-    coms = [T0.t, T1.t]
+        # 假设robot1和robot2是两个Robot对象，分别设置关节位置
+        robot1.set_joint(qi[:6])  # 设置第一个机器人的关节位置
+        robot2.set_joint(qi[6:])  # 设置第二个机器人的关节位置
+
+        joints[i, :6] = robot1.get_joint()  # 获取第一个机器人的关节位置
+        joints[i, 6:] = robot2.get_joint()  # 获取第二个机器人的关节位置
+
+    # 初始化循环变量和方向标志
+    s_step = 0
+    forward = True
+    j = 0
+
+    # 为两个机器人设置初始和终端关节位置，并检索它们的笛卡尔坐标
+    robot1.set_joint(joints[0, :6])
+    T0 = robot1.get_cartesian()  # robot1的初始位置
+    robot1.set_joint(joints[-1, :6])
+    T1 = robot1.get_cartesian()  # robot1的终端位置
+
+    robot2.set_joint(joints[0, 6:])
+    T2 = robot2.get_cartesian()  # robot2的初始位置
+    robot2.set_joint(joints[-1, 6:])
+    T3 = robot2.get_cartesian()  # robot2的终端位置
+
+    # 收集笛卡尔坐标以供可视化
+    coms = [T0.t, T1.t, T2.t, T3.t]
 
     # 主循环，用于更新仿真环境并进行可视化
     while True:
-        # 设置仿真环境中的关节位置和速度
-        for i in range(dof):
+        # 根据当前步骤的关节位置更新仿真环境
+        for i in range(6):  # 在仿真中更新第一个机器人的关节
             sim.data.qpos[i] = joints[s_step, i]
-            sim.data.qvel[i] = 0.0
+        for i in range(6, 12):  # 在仿真中更新第二个机器人的关节
+            sim.data.qpos[i] = joints[s_step, i]
+        sim.data.qvel[:] = 0.0  # 假设速度为零以简化
 
-        # 步进仿真环境
-        sim.step()
-        # 渲染视图
-        viewer.render()
+        sim.step()  # 步进仿真
+        viewer.render()  # 渲染视图
 
         # 在初始和终止位置添加标记
         for com in coms:

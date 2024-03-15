@@ -1,8 +1,12 @@
 from typing import List  # 从typing模块导入List，用于类型注解
-from abc import ABC, abstractmethod  # 从abc模块导入ABC和abstractmethod，用于定义抽象基类和抽象方法
+from abc import (
+    ABC,
+    abstractmethod,
+)  # 从abc模块导入ABC和abstractmethod，用于定义抽象基类和抽象方法
 import numpy as np  # 导入numpy库，重命名为np，用于进行数学计算
 
 from src.geometry.simplex.geometry import Geometry  # 从项目指定路径导入Geometry类
+
 
 class Support(ABC):  # 定义Support类，继承自抽象基类ABC
     @property  # 使用@property装饰器，定义一个抽象属性
@@ -20,4 +24,3 @@ class Support(ABC):  # 定义Support类，继承自抽象基类ABC
                 support_point = point  # 更新支撑点为当前点
 
         return support_point  # 返回计算得到的支撑点
-
