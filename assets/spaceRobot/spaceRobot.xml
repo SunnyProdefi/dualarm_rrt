@@ -1,0 +1,45 @@
+<mujoco model="spaceRobot"> <!-- 定义一个名为“spaceRobot”的MuJoCo模型 -->
+  <compiler angle="radian" meshdir="assets"/> <!-- 设置编译器使用弧度作为角度单位，并指定网格文件的目录为“assets” -->
+
+  <!--  <option integrator="implicitfast"/> --> <!-- 将积分器设置为“implicitfast”，此行已被注释掉 -->
+
+  <default> <!-- 默认设置开始 -->
+    <default class="spaceRobot"> <!-- 为名为“spaceRobot”的类设置默认属性 -->
+      <material specular="0.5" shininess="0.25"/> <!-- 设置材料的镜面反射率为0.5，光泽度为0.25 -->
+      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1"/> <!-- 设置关节的默认轴为Y轴，范围为[-6.28319, 6.28319]，电机惯量（armature）为0.1 -->
+      <general gaintype="fixed" biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="2000" biasprm="0 -2000 -400"
+        forcerange="-150 150"/> <!-- 设置通用增益类型为固定，偏置类型为仿射，控制范围和力范围 -->
+      <default class="size3"> <!-- 为尺寸为3的元素设置默认属性 -->
+        <default class="size3_limited"> <!-- 为限制尺寸为3的元素设置默认属性 -->
+          <joint range="-3.1415 3.1415"/> <!-- 设置关节的范围为[-3.1415, 3.1415] -->
+          <general ctrlrange="-3.1415 3.1415"/> <!-- 设置控制范围为[-3.1415, 3.1415] -->
+        </default>
+      </default>
+      <default class="size1"> <!-- 为尺寸为1的元素设置默认属性 -->
+        <general gainprm="500" biasprm="0 -500 -100" forcerange="-28 28"/> <!-- 设置增益参数、偏置参数和力范围 -->
+      </default>
+      <default class="visual"> <!-- 为视觉相关的元素设置默认属性 -->
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/> <!-- 设置几何体类型为mesh，碰撞类型和碰撞群组 -->
+      </default>
+      <default class="collision"> <!-- 为碰撞相关的元素设置默认属性 -->
+        <geom type="capsule" group="3"/> <!-- 设置几何体类型为capsule，碰撞群组为3 -->
+        <default class="eef_collision"> <!-- 为末端执行器的碰撞设置默认属性 -->
+          <geom type="cylinder"/> <!-- 设置几何体类型为cylinder -->
+        </default>
+      </default>
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/> <!-- 设置标志点的大小、颜色和群组 -->
+    </default>
+  </default> <!-- 默认设置结束 -->
+
+  <asset> <!-- 资产定义开始 -->
+    <material class="spaceRobot" name="black" rgba="0.033 0.033 0.033 1"/> <!-- 定义一个名为“black”的材料，为“spaceRobot”类使用 -->
+    <mesh file="mujocoBase.stl"/> <!-- 引入一个STL文件作为mesh资产 -->
+  </asset> <!-- 资产定义结束 -->
+
+  <worldbody> <!-- 世界主体定义开始 -->
+    <body name="base" pos="0 0 0" quat="1 0 0 0" childclass="spaceRobot"> <!-- 定义一个名为“base”的主体，位置为原点，不旋转 -->
+      <geom mesh="mujocoBase" material="black" class="visual"/> <!-- 使用mesh类型的几何体，引用了“mujocoBase.stl”文件和“black”材料，此几何体用于视觉展示 -->
+    </body>
+  </worldbody> <!-- 世界主体定义结束 -->
+
+</mujoco> <!-- MuJoCo模型定义结束 -->

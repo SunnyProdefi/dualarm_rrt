@@ -2,7 +2,7 @@
 
   <include file="ur5e.xml"/>
   <!-- 包含另一个文件“ur5e.xml”，通常这个文件定义了UR5e机械臂的模型。-->
-  <include file="ur5eCopy.xml"/>
+  <!-- <include file="ur5eCopy.xml"/> -->
   <!-- 包含另一个文件“ur5e.xml”，通常这个文件定义了UR5e机械臂的模型。-->
   <statistic center="0.3 0 0.4" extent="0.8"/>
   <!-- 定义场景的统计中心和范围，用于相机自动对焦等。-->

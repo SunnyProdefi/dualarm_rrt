@@ -1,0 +1,222 @@
+<mujoco model="limbarm_robot"> <!-- MuJoCo模型定义开始，模型名称为limbarm_robot -->
+  <compiler angle="radian" meshdir="assets"/> <!-- 编译器设置：角度单位为弧度，网格文件目录为assets文件夹 -->
+  <asset> <!-- 资产定义开始，用于定义模型中使用的所有资源，如网格文件 -->
+    <mesh name="base_link" file="base_link.STL"/> <!-- 定义一个网格资源，名称为base_link，文件来源是base_link.STL -->
+    <mesh name="Link_platform" file="Link_platform.STL"/> <!-- 定义一个网格资源，名称为Link_platform，文件来源是Link_platform.STL -->
+    <mesh name="Link_0" file="Link_0.STL"/> <!-- 定义一个网格资源，名称为Link_0，文件来源是Link_0.STL -->
+    <mesh name="Link_1" file="Link_1.STL"/> <!-- 定义一个网格资源，名称为Link_1，文件来源是Link_1.STL -->
+    <mesh name="Link_2" file="Link_2.STL"/> <!-- 定义一个网格资源，名称为Link_2，文件来源是Link_2.STL -->
+    <mesh name="Link_3" file="Link_3.STL"/> <!-- 定义一个网格资源，名称为Link_3，文件来源是Link_3.STL -->
+    <mesh name="Link_4" file="Link_4.STL"/> <!-- 定义一个网格资源，名称为Link_4，文件来源是Link_4.STL -->
+    <mesh name="Link_5" file="Link_5.STL"/> <!-- 定义一个网格资源，名称为Link_5，文件来源是Link_5.STL -->
+    <mesh name="Link_6" file="Link_6.STL"/> <!-- 定义一个网格资源，名称为Link_6，文件来源是Link_6.STL -->
+    <mesh name="Hand" file="Hand.STL"/> <!-- 定义一个网格资源，名称为Hand，文件来源是Hand.STL -->
+    <mesh name="Link_platlink" file="Link_platlink.STL"/> <!-- 定义一个网格资源，名称为Link_platlink，文件来源是Link_platlink.STL -->
+  </asset> <!-- 资产定义结束 -->
+<worldbody> <!-- 定义世界体的开始 -->
+    <body name="base" pos="0 0 1.3"> <!-- 定义基座的主体，位置在(0, 0, 1.0) -->
+      <geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="base_link"/> <!-- 定义基座的几何形状为一个网格，颜色和使用的网格文件 -->
+      <body name="Link_platform" pos="0 0 0.01"> <!-- 定义名为Link_platform的子体，位置在基座之上(0, 0, 0.01) -->
+        <inertial pos="0 0 0.0118908" quat="0.5 0.5 -0.5 0.5" mass="0.213013" diaginertia="0.00145983 0.000750053 0.000750053"/> <!--定义惯性元素，包括位置、质量和惯性矩-->
+        <joint name="Joint_platform" pos="0 0 0" axis="0 0 1" type="slide" limited="true" range="0 0.055"/> <!-- 定义一个滑动关节，限制其滑动范围 -->
+        <geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="Link_platform"/> <!-- 定义Link_platform的几何形状和颜色 -->
+        <!-- <body name="Link1_platlink" pos="0.056569 0.056569 0" quat="0.65328 0.653282 0.270599 0.270598"> 
+          <inertial pos="0.0289156 -0.0118446 0.0005" quat="0.13659 0.693789 -0.13659 0.693789" mass="0.022077" diaginertia="1.46211e-05 1.44385e-05 3.51396e-07"/> 
+          <joint name="Joint1_platlink" pos="0 0 0" axis="0 0 1" limited="true" range="-1.5708 0"/>
+          <geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="Link_platlink"/>
+        </body>
+        <body name="Link2_platlink" pos="-0.056569 0.056569 0" quat="0.270596 0.270597 0.653283 0.653281">
+          <inertial pos="0.0289156 -0.0118446 0.0005" quat="0.13659 0.693789 -0.13659 0.693789" mass="0.022077" diaginertia="1.46211e-05 1.44385e-05 3.51396e-07"/>
+          <joint name="Joint2_platlink" pos="0 0 0" axis="0 0 1" limited="true" range="-1.5708 0"/>
+          <geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="Link_platlink"/>
+        </body>
+        <body name="Link3_platlink" pos="0.056569 -0.056569 0" quat="0.65328 0.653282 -0.270599 -0.270598">
+          <inertial pos="0.0289156 -0.0118446 0.0005" quat="0.13659 0.693789 -0.13659 0.693789" mass="0.022077" diaginertia="1.46211e-05 1.44385e-05 3.51396e-07"/>
+          <joint name="Joint3_platlink" pos="0 0 0" axis="0 0 1" limited="true" range="-1.5708 0"/>
+          <geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="Link_platlink"/>
+        </body>
+        <body name="Link4_platlink" pos="-0.056569 -0.056569 0" quat="0.270596 0.270597 -0.653283 -0.653281">
+          <inertial pos="0.0289156 -0.0118446 0.0005" quat="0.13659 0.693789 -0.13659 0.693789" mass="0.022077" diaginertia="1.46211e-05 1.44385e-05 3.51396e-07"/>
+          <joint name="Joint4_platlink" pos="0 0 0" axis="0 0 1" limited="true" range="-1.5708 0"/>
+          <geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="Link_platlink"/>
+        </body> -->
+      </body>
+      <body name="Link1_0" pos="0.072125 0.072125 0.018" quat="0.65328 0.653282 0.270599 0.270598"> <!-- 定义第一段连杆Link1_0，包含位置和四元数定义的姿态 -->
+        <inertial pos="0.066417 -0.0201282 4.76216e-09" quat="0.596044 0.596036 0.38045 0.380435" mass="0.167856" diaginertia="0.000419768 0.000408729 7.84584e-05"/> <!-- 定义惯性属性，包括质心位置、四元数姿态、质量和对角惯性矩 -->
+        <joint name="Joint1_0" pos="0 0 0" axis="0 0 1" limited="true" range="0 1.5708"/> <!-- 定义一个关节，包含轴向、限制范围 -->
+        <geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="Link_0"/> <!-- 定义连杆的几何形状和颜色 -->
+        <body name="Link1_1" pos="0.12 -0.058 0" quat="0.707105 0.707108 0 0"> <!-- 定义下一个连杆Link1_1，包含位置和姿态 -->
+          <inertial pos="0.0250849 0.00345843 0.0514637" quat="0.959456 -0.0619808 0.0855757 -0.261302" mass="0.0924049" diaginertia="0.000117741 0.000104794 9.27456e-05"/> <!-- 定义惯性属性 -->
+          <joint name="Joint1_1" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 2.0944"/> <!-- 定义一个关节，设置其移动范围 -->
+          <geom type="mesh" rgba="1 1 1 1" mesh="Link_1"/> <!-- 定义连杆的几何形状和颜色 -->
+          <body name="Link1_2" pos="0.0625 0.0025 0.059" quat="0.707105 -0.707108 0 0"> <!-- 定义又一个连杆Link1_2，位置和姿态设置 -->
+            <inertial pos="0.164755 5.52892e-05 0.00408065" quat="0.488338 0.511396 0.511396 0.488338" mass="0.199014" diaginertia="0.000550518 0.00052161 0.000156285"/> <!-- 定义惯性属性 -->
+            <joint name="Joint1_2" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 1.5708"/> <!-- 定义关节和其限制范围 -->
+            <geom type="mesh" rgba="1 1 1 1" mesh="Link_2"/> <!-- 定义连杆的几何形状和颜色 -->
+            <body name="Link1_3" pos="0.35 0.0002 0"> <!-- 定义下一级连杆Link1_3，位置设置 -->
+              <inertial pos="0.0720098 -0.000448351 0.00124427" quat="0.393678 0.58419 0.592968 0.390035" mass="0.133696" diaginertia="0.000205796 0.000197193 0.000101151"/> <!--定义惯性属性，包括质心位置、四元数姿态、质量和对角惯性矩 -->
+              <joint name="Joint1_3" pos="0 0 0" axis="0 0 1" limited="true" range="-2.53073 2.53073"/> <!-- 定义一个关节，设置其移动范围 -->
+              <geom type="mesh" rgba="1 1 1 1" mesh="Link_3"/> <!-- 定义连杆的几何形状和颜色 -->
+              <body name="Link1_4" pos="0.1745 0 0" quat="0.707105 0 0.707108 0"> <!-- 定义下一个连杆Link1_4，位置和姿态设置 -->
+                <inertial pos="-0.00219596 0 0.109373" quat="0.705855 -0.0420633 -0.0420633 0.705855" mass="0.0991853" diaginertia="0.000118365 0.000104482 7.01472e-05"/> <!-- 定义惯性属性 -->
+                <joint name="Joint1_4" pos="0 0 0" axis="0 0 1" limited="true" range="-3.14159 3.14159"/> <!-- 定义一个全向旋转关节，没有移动限制 -->
+                <geom type="mesh" rgba="1 1 1 1" mesh="Link_4"/> <!-- 定义连杆的几何形状和颜色 -->
+                <body name="Link1_5" pos="0 0 0.1795" quat="-2.59734e-06 0.707105 2.59735e-06 0.707108"> <!-- 定义下一个连杆Link1_5，位置和姿态设置 -->
+                  <inertial pos="0.0516421 -0.000601786 0.00160323" quat="0.663071 -0.213494 -0.209004 0.686349" mass="0.102912" diaginertia="0.000113253 0.000106013 6.90309e-05"/> <!-- 定义惯性属性 -->
+                  <joint name="Joint1_5" pos="0 0 0" axis="0 0 1" limited="true" range="-1.91986 1.91986"/> <!-- 定义一个关节，设置其移动范围 -->
+                  <geom type="mesh" rgba="1 1 1 1" mesh="Link_5"/> <!-- 定义连杆的几何形状和颜色 -->
+                  <body name="Link1_6" pos="0.141 0 0" quat="0.707105 0 0.707108 0"> <!-- 定义最后一个连杆Link1_6，位置和姿态设置 -->
+                    <inertial pos="7.58852e-06 -0.00109374 0.0825537" quat="0.999314 0.014463 -0.000936338 -0.03408" mass="0.440813" diaginertia="0.00107048 0.000954794 0.000369092"/> <!-- 定义惯性属性 -->
+                    <joint name="Joint1_6" pos="0 0 0" axis="0 0 1" limited="true" range="-3.14159 3.14159"/> <!-- 定义一个全向旋转关节，没有移动限制 -->
+                    <geom type="mesh" rgba="1 1 1 1" mesh="Link_6"/> <!-- 定义连杆的几何形状和颜色 -->
+                    <geom pos="0 0 0.0385" type="mesh" rgba="1 1 1 1" mesh="Hand"/> <!-- 定义手部的几何形状，位置相对于Link1_6 -->
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <body name="Link2_0" pos="-0.072125 0.072125 0.018" quat="0.270596 0.270597 0.653283 0.653281">
+        <inertial pos="0.066417 -0.0201282 4.76216e-09" quat="0.596044 0.596036 0.38045 0.380435" mass="0.167856" diaginertia="0.000419768 0.000408729 7.84584e-05"/>
+        <joint name="Joint2_0" pos="0 0 0" axis="0 0 1" limited="true" range="0 1.5708"/>
+        <geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="Link_0"/>
+        <body name="Link2_1" pos="0.12 -0.058 0" quat="0.707105 0.707108 0 0">
+          <inertial pos="0.0250849 0.00345843 0.0514637" quat="0.959456 -0.0619808 0.0855757 -0.261302" mass="0.0924049" diaginertia="0.000117741 0.000104794 9.27456e-05"/>
+          <joint name="Joint2_1" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 2.0944"/>
+          <geom type="mesh" rgba="1 1 1 1" mesh="Link_1"/>
+          <body name="Link2_2" pos="0.0625 0.0025 0.059" quat="0.707105 -0.707108 0 0">
+            <inertial pos="0.164755 5.52892e-05 0.00408065" quat="0.488338 0.511396 0.511396 0.488338" mass="0.199014" diaginertia="0.000550518 0.00052161 0.000156285"/>
+            <joint name="Joint2_2" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 1.5708"/>
+            <geom type="mesh" rgba="1 1 1 1" mesh="Link_2"/>
+            <body name="Link2_3" pos="0.35 0.0002 0">
+              <inertial pos="0.0720098 -0.000448351 0.00124427" quat="0.393678 0.58419 0.592968 0.390035" mass="0.133696" diaginertia="0.000205796 0.000197193 0.000101151"/>
+              <joint name="Joint2_3" pos="0 0 0" axis="0 0 1" limited="true" range="-2.53073 2.53073"/>
+              <geom type="mesh" rgba="1 1 1 1" mesh="Link_3"/>
+              <body name="Link2_4" pos="0.1745 0 0" quat="0.707105 0 0.707108 0">
+                <inertial pos="-0.00219596 0 0.109373" quat="0.705855 -0.0420633 -0.0420633 0.705855" mass="0.0991853" diaginertia="0.000118365 0.000104482 7.01472e-05"/>
+                <joint name="Joint2_4" pos="0 0 0" axis="0 0 1" limited="true" range="-3.14159 3.14159"/>
+                <geom type="mesh" rgba="1 1 1 1" mesh="Link_4"/>
+                <body name="Link2_5" pos="0 0 0.1795" quat="-2.59734e-06 0.707105 2.59735e-06 0.707108">
+                  <inertial pos="0.0516421 -0.000601786 0.00160323" quat="0.663071 -0.213494 -0.209004 0.686349" mass="0.102912" diaginertia="0.000113253 0.000106013 6.90309e-05"/>
+                  <joint name="Joint2_5" pos="0 0 0" axis="0 0 1" limited="true" range="-1.91986 1.91986"/>
+                  <geom type="mesh" rgba="1 1 1 1" mesh="Link_5"/>
+                  <body name="Link2_6" pos="0.141 0 0" quat="0.707105 0 0.707108 0">
+                    <inertial pos="7.58852e-06 -0.00109374 0.0825537" quat="0.999314 0.014463 -0.000936338 -0.03408" mass="0.440813" diaginertia="0.00107048 0.000954794 0.000369092"/>
+                    <joint name="Joint2_6" pos="0 0 0" axis="0 0 1" limited="true" range="-3.14159 3.14159"/>
+                    <geom type="mesh" rgba="1 1 1 1" mesh="Link_6"/>
+                    <geom pos="0 0 0.0385" type="mesh" rgba="1 1 1 1" mesh="Hand"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="Link3_0" pos="0.072125 -0.072125 0.018" quat="0.65328 0.653282 -0.270599 -0.270598">
+        <inertial pos="0.066417 -0.0201282 4.76216e-09" quat="0.596044 0.596036 0.38045 0.380435" mass="0.167856" diaginertia="0.000419768 0.000408729 7.84584e-05"/>
+        <joint name="Joint3_0" pos="0 0 0" axis="0 0 1" limited="true" range="0 1.5708"/>
+        <geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="Link_0"/>
+        <body name="Link3_1" pos="0.12 -0.058 0" quat="0.707105 0.707108 0 0">
+          <inertial pos="0.0250849 0.00345843 0.0514637" quat="0.959456 -0.0619808 0.0855757 -0.261302" mass="0.0924049" diaginertia="0.000117741 0.000104794 9.27456e-05"/>
+          <joint name="Joint3_1" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 2.0944"/>
+          <geom type="mesh" rgba="1 1 1 1" mesh="Link_1"/>
+          <body name="Link3_2" pos="0.0625 0.0025 0.059" quat="0.707105 -0.707108 0 0">
+            <inertial pos="0.164755 5.52892e-05 0.00408065" quat="0.488338 0.511396 0.511396 0.488338" mass="0.199014" diaginertia="0.000550518 0.00052161 0.000156285"/>
+            <joint name="Joint3_2" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 1.5708"/>
+            <geom type="mesh" rgba="1 1 1 1" mesh="Link_2"/>
+            <body name="Link3_3" pos="0.35 0.0002 0">
+              <inertial pos="0.0720098 -0.000448351 0.00124427" quat="0.393678 0.58419 0.592968 0.390035" mass="0.133696" diaginertia="0.000205796 0.000197193 0.000101151"/>
+              <joint name="Joint3_3" pos="0 0 0" axis="0 0 1" limited="true" range="-2.53073 2.53073"/>
+              <geom type="mesh" rgba="1 1 1 1" mesh="Link_3"/>
+              <body name="Link3_4" pos="0.1745 0 0" quat="0.707105 0 0.707108 0">
+                <inertial pos="-0.00219596 0 0.109373" quat="0.705855 -0.0420633 -0.0420633 0.705855" mass="0.0991853" diaginertia="0.000118365 0.000104482 7.01472e-05"/>
+                <joint name="Joint3_4" pos="0 0 0" axis="0 0 1" limited="true" range="-3.14159 3.14159"/>
+                <geom type="mesh" rgba="1 1 1 1" mesh="Link_4"/>
+                <body name="Link3_5" pos="0 0 0.1795" quat="-2.59734e-06 0.707105 2.59735e-06 0.707108">
+                  <inertial pos="0.0516421 -0.000601786 0.00160323" quat="0.663071 -0.213494 -0.209004 0.686349" mass="0.102912" diaginertia="0.000113253 0.000106013 6.90309e-05"/>
+                  <joint name="Joint3_5" pos="0 0 0" axis="0 0 1" limited="true" range="-1.91986 1.91986"/>
+                  <geom type="mesh" rgba="1 1 1 1" mesh="Link_5"/>
+                  <body name="Link3_6" pos="0.141 0 0" quat="0.707105 0 0.707108 0">
+                    <inertial pos="7.58852e-06 -0.00109374 0.0825537" quat="0.999314 0.014463 -0.000936338 -0.03408" mass="0.440813" diaginertia="0.00107048 0.000954794 0.000369092"/>
+                    <joint name="Joint3_6" pos="0 0 0" axis="0 0 1" limited="true" range="-3.14159 3.14159"/>
+                    <geom type="mesh" rgba="1 1 1 1" mesh="Link_6"/>
+                    <geom pos="0 0 0.0385" type="mesh" rgba="1 1 1 1" mesh="Hand"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="Link4_0" pos="-0.072125 -0.072125 0.018" quat="0.270596 0.270597 -0.653283 -0.653281">
+        <inertial pos="0.066417 -0.0201282 4.76216e-09" quat="0.596044 0.596036 0.38045 0.380435" mass="0.167856" diaginertia="0.000419768 0.000408729 7.84584e-05"/>
+        <joint name="Joint4_0" pos="0 0 0" axis="0 0 1" limited="true" range="0 1.5708"/>
+        <geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="Link_0"/>
+        <body name="Link4_1" pos="0.12 -0.058 0" quat="0.707105 0.707108 0 0">
+          <inertial pos="0.0250849 0.00345843 0.0514637" quat="0.959456 -0.0619808 0.0855757 -0.261302" mass="0.0924049" diaginertia="0.000117741 0.000104794 9.27456e-05"/>
+          <joint name="Joint4_1" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 2.0944"/>
+          <geom type="mesh" rgba="1 1 1 1" mesh="Link_1"/>
+          <body name="Link4_2" pos="0.0625 0.0025 0.059" quat="0.707105 -0.707108 0 0">
+            <inertial pos="0.164755 5.52892e-05 0.00408065" quat="0.488338 0.511396 0.511396 0.488338" mass="0.199014" diaginertia="0.000550518 0.00052161 0.000156285"/>
+            <joint name="Joint4_2" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 1.5708"/>
+            <geom type="mesh" rgba="1 1 1 1" mesh="Link_2"/>
+            <body name="Link4_3" pos="0.35 0.0002 0">
+              <inertial pos="0.0720098 -0.000448351 0.00124427" quat="0.393678 0.58419 0.592968 0.390035" mass="0.133696" diaginertia="0.000205796 0.000197193 0.000101151"/>
+              <joint name="Joint4_3" pos="0 0 0" axis="0 0 1" limited="true" range="-2.53073 2.53073"/>
+              <geom type="mesh" rgba="1 1 1 1" mesh="Link_3"/>
+              <body name="Link4_4" pos="0.1745 0 0" quat="0.707105 0 0.707108 0">
+                <inertial pos="-0.00219596 0 0.109373" quat="0.705855 -0.0420633 -0.0420633 0.705855" mass="0.0991853" diaginertia="0.000118365 0.000104482 7.01472e-05"/>
+                <joint name="Joint4_4" pos="0 0 0" axis="0 0 1" limited="true" range="-3.14159 3.14159"/>
+                <geom type="mesh" rgba="1 1 1 1" mesh="Link_4"/>
+                <body name="Link4_5" pos="0 0 0.1795" quat="-2.59734e-06 0.707105 2.59735e-06 0.707108">
+                  <inertial pos="0.0516421 -0.000601786 0.00160323" quat="0.663071 -0.213494 -0.209004 0.686349" mass="0.102912" diaginertia="0.000113253 0.000106013 6.90309e-05"/>
+                  <joint name="Joint4_5" pos="0 0 0" axis="0 0 1" limited="true" range="-1.91986 1.91986"/>
+                  <geom type="mesh" rgba="1 1 1 1" mesh="Link_5"/>
+                  <body name="Link4_6" pos="0.141 0 0" quat="0.707105 0 0.707108 0">
+                    <inertial pos="7.58852e-06 -0.00109374 0.0825537" quat="0.999314 0.014463 -0.000936338 -0.03408" mass="0.440813" diaginertia="0.00107048 0.000954794 0.000369092"/>
+                    <joint name="Joint4_6" pos="0 0 0" axis="0 0 1" limited="true" range="-3.14159 3.14159"/>
+                    <geom type="mesh" rgba="1 1 1 1" mesh="Link_6"/>
+                    <geom pos="0 0 0.0385" type="mesh" rgba="1 1 1 1" mesh="Hand"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <motor name="platform" joint="Joint_platform"/>
+    <motor name="motor1" joint="Joint1_0"/>
+    <motor name="motor2" joint="Joint2_0"/>
+    <motor name="motor3" joint="Joint3_0"/>
+    <motor name="motor4" joint="Joint4_0"/>
+    <motor name="shoulder_pan1" joint="Joint1_1"/>
+    <motor name="shoulder_lift1" joint="Joint1_2"/>
+    <motor name="elbow1" joint="Joint1_3"/>
+    <motor name="wrist_11" joint="Joint1_4"/>
+    <motor name="wrist_21" joint="Joint1_5"/>
+    <motor name="wrist_31" joint="Joint1_6"/>
+    <motor name="shoulder_pan2" joint="Joint2_1"/>
+    <motor name="shoulder_lift2" joint="Joint2_2"/>
+    <motor name="elbow2" joint="Joint2_3"/>
+    <motor name="wrist_12" joint="Joint2_4"/>
+    <motor name="wrist_22" joint="Joint2_5"/>
+    <motor name="wrist_32" joint="Joint2_6"/>
+    <motor name="shoulder_pan3" joint="Joint3_1"/>
+    <motor name="shoulder_lift3" joint="Joint3_2"/>
+    <motor name="elbow3" joint="Joint3_3"/>
+    <motor name="wrist_13" joint="Joint3_4"/>
+    <motor name="wrist_23" joint="Joint3_5"/>
+    <motor name="wrist_33" joint="Joint3_6"/>
+    <motor name="shoulder_pan4" joint="Joint4_1"/>
+    <motor name="shoulder_lift4" joint="Joint4_2"/>
+    <motor name="elbow4" joint="Joint4_3"/>
+    <motor name="wrist_14" joint="Joint4_4"/>
+    <motor name="wrist_24" joint="Joint4_5"/>
+    <motor name="wrist_34" joint="Joint4_6"/>
+  </actuator>
+</mujoco>
