@@ -1,8 +1,5 @@
 <mujoco model="ur5eCopy">
   <compiler angle="radian" meshdir="assets"/>
-
-  <!--  <option integrator="implicitfast"/>-->
-
   <default>
     <default class="ur5eCopy">
       <material specular="0.5" shininess="0.25"/>
@@ -29,13 +26,11 @@
       <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/>
     </default>
   </default>
-
   <asset>
     <material class="ur5eCopy" name="black_arm2" rgba="0.033 0.033 0.033 1"/>
     <material class="ur5eCopy" name="jointgray_arm2" rgba="0.278 0.278 0.278 1"/>
     <material class="ur5eCopy" name="linkgray_arm2" rgba="0.82 0.82 0.82 1"/>
     <material class="ur5eCopy" name="urblue_arm2" rgba="0.49 0.678 0.8 1"/>
-
     <mesh file="base_0.stl"/>
     <mesh file="base_1.stl"/>
     <mesh file="shoulder_0.stl"/>
@@ -57,7 +52,6 @@
     <mesh file="wrist2_2.stl"/>
     <mesh file="wrist3.stl"/>
   </asset>
-
   <worldbody>
     <light name="spotlight_arm2" mode="targetbodycom" target="wrist_2_link_arm2" pos="0 -1 2"/>
     <body name="base_arm2" pos="0 0.5 0" quat="1 0 0 0" childclass="ur5eCopy">
@@ -118,13 +112,12 @@
       </body>
     </body>
   </worldbody>
-
-  <actuator>
+  <!-- <actuator>
     <motor name="shoulder_pan_arm2" joint="shoulder_pan_joint_arm2"/>
     <motor name="shoulder_lift_arm2" joint="shoulder_lift_joint_arm2"/>
     <motor name="elbow_arm2" joint="elbow_joint_arm2"/>
     <motor name="wrist_1_arm2" joint="wrist_1_joint_arm2"/>
     <motor name="wrist_2_arm2" joint="wrist_2_joint_arm2"/>
     <motor name="wrist_3_arm2" joint="wrist_3_joint_arm2"/>
-  </actuator>
+  </actuator> -->
 </mujoco>

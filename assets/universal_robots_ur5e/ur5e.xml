@@ -1,107 +1,101 @@
-<mujoco model="ur5e">
-  <compiler angle="radian" meshdir="assets"/>
-
-<!--  <option integrator="implicitfast"/>-->
-
-  <default>
-    <default class="ur5e">
-      <material specular="0.5" shininess="0.25"/>
-      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1"/>
+<mujoco model="ur5e"> <!-- 定义一个名为ur5e的MuJoCo模型 -->
+  <compiler angle="radian" meshdir="assets"/> <!-- 设置编译器参数：使用弧度作为角度单位，设置网格文件的目录为"assets" -->
+  <default> <!-- 设置模型的默认属性 -->
+    <default class="ur5e"> <!-- 为ur5e类设置默认属性 -->
+      <material specular="0.5" shininess="0.25"/> <!-- 设置材料的镜面反射系数为0.5，光泽度为0.25 -->
+      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1"/> <!-- 定义关节的默认属性：旋转轴为Y轴，旋转范围为-2π到2π，装甲参数为0.1 -->
       <general gaintype="fixed" biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="2000" biasprm="0 -2000 -400"
-        forcerange="-150 150"/>
-      <default class="size3">
-        <default class="size3_limited">
-          <joint range="-3.1415 3.1415"/>
-          <general ctrlrange="-3.1415 3.1415"/>
+        forcerange="-150 150"/> <!-- 定义一般控制参数：增益类型为固定，偏置类型为仿射，控制范围为-2π到2π，增益参数为2000，偏置参数为0、-2000、-400，力范围为-150到150 -->
+      <default class="size3"> <!-- 定义名为size3的类的默认属性 -->
+        <default class="size3_limited"> <!-- 在size3类中，为size3_limited子类设置默认属性 -->
+          <joint range="-3.1415 3.1415"/> <!-- 关节旋转范围设置为-π到π -->
+          <general ctrlrange="-3.1415 3.1415"/> <!-- 控制范围也设置为-π到π -->
         </default>
       </default>
-      <default class="size1">
-        <general gainprm="500" biasprm="0 -500 -100" forcerange="-28 28"/>
+      <default class="size1"> <!-- 定义名为size1的类的默认属性 -->
+        <general gainprm="500" biasprm="0 -500 -100" forcerange="-28 28"/> <!-- 定义一般控制参数：增益参数为500，偏置参数为0、-500、-100，力范围为-28到28 -->
       </default>
-      <default class="visual">
-        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      <default class="visual"> <!-- 定义视觉相关的默认属性 -->
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/> <!-- 几何形状类型为网格，不参与碰撞检测，分配到组2 -->
       </default>
-      <default class="collision">
-        <geom type="capsule" group="3"/>
-        <default class="eef_collision">
-          <geom type="cylinder"/>
+      <default class="collision"> <!-- 定义碰撞相关的默认属性 -->
+        <geom type="capsule" group="3"/> <!-- 几何形状类型为胶囊体，分配到组3 -->
+        <default class="eef_collision"> <!-- 为末端执行器的碰撞检测定义默认属性 -->
+          <geom type="cylinder"/> <!-- 几何形状类型为圆柱体 -->
         </default>
       </default>
-      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/>
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/> <!-- 定义位置点的大小、颜色和组别 -->
     </default>
   </default>
-
-  <asset>
-    <material class="ur5e" name="black" rgba="0.033 0.033 0.033 1"/>
-    <material class="ur5e" name="jointgray" rgba="0.278 0.278 0.278 1"/>
-    <material class="ur5e" name="linkgray" rgba="0.82 0.82 0.82 1"/>
-    <material class="ur5e" name="urblue" rgba="0.49 0.678 0.8 1"/>
-
-    <mesh file="base_0.stl"/>
-    <mesh file="base_1.stl"/>
-    <mesh file="shoulder_0.stl"/>
-    <mesh file="shoulder_1.stl"/>
-    <mesh file="shoulder_2.stl"/>
-    <mesh file="upperarm_0.stl"/>
-    <mesh file="upperarm_1.stl"/>
-    <mesh file="upperarm_2.stl"/>
-    <mesh file="upperarm_3.stl"/>
-    <mesh file="forearm_0.stl"/>
-    <mesh file="forearm_1.stl"/>
-    <mesh file="forearm_2.stl"/>
-    <mesh file="forearm_3.stl"/>
-    <mesh file="wrist1_0.stl"/>
-    <mesh file="wrist1_1.stl"/>
-    <mesh file="wrist1_2.stl"/>
-    <mesh file="wrist2_0.stl"/>
-    <mesh file="wrist2_1.stl"/>
-    <mesh file="wrist2_2.stl"/>
-    <mesh file="wrist3.stl"/>
+  <asset> <!-- 定义模型使用的资源集合 -->
+    <material class="ur5e" name="black" rgba="0.033 0.033 0.033 1"/> <!-- 定义一个名为black的材质，用于ur5e类，颜色为非常深的灰（几乎黑色），不透明度为1 -->
+    <material class="ur5e" name="jointgray" rgba="0.278 0.278 0.278 1"/> <!-- 定义一个名为jointgray的材质，用于ur5e类，颜色为中等灰色，不透明度为1 -->
+    <material class="ur5e" name="linkgray" rgba="0.82 0.82 0.82 1"/> <!-- 定义一个名为linkgray的材质，用于ur5e类，颜色为浅灰色，不透明度为1 -->
+    <material class="ur5e" name="urblue" rgba="0.49 0.678 0.8 1"/> <!-- 定义一个名为urblue的材质，用于ur5e类，颜色为浅蓝色，不透明度为1 -->
+    <mesh file="base_0.stl"/> <!-- 引用名为base_0.stl的网格文件 -->
+    <mesh file="base_1.stl"/> <!-- 引用名为base_1.stl的网格文件 -->
+    <mesh file="shoulder_0.stl"/> <!-- 引用名为shoulder_0.stl的网格文件 -->
+    <mesh file="shoulder_1.stl"/> <!-- 引用名为shoulder_1.stl的网格文件 -->
+    <mesh file="shoulder_2.stl"/> <!-- 引用名为shoulder_2.stl的网格文件 -->
+    <mesh file="upperarm_0.stl"/> <!-- 引用名为upperarm_0.stl的网格文件 -->
+    <mesh file="upperarm_1.stl"/> <!-- 引用名为upperarm_1.stl的网格文件 -->
+    <mesh file="upperarm_2.stl"/> <!-- 引用名为upperarm_2.stl的网格文件 -->
+    <mesh file="upperarm_3.stl"/> <!-- 引用名为upperarm_3.stl的网格文件 -->
+    <mesh file="forearm_0.stl"/> <!-- 引用名为forearm_0.stl的网格文件 -->
+    <mesh file="forearm_1.stl"/> <!-- 引用名为forearm_1.stl的网格文件 -->
+    <mesh file="forearm_2.stl"/> <!-- 引用名为forearm_2.stl的网格文件 -->
+    <mesh file="forearm_3.stl"/> <!-- 引用名为forearm_3.stl的网格文件 -->
+    <mesh file="wrist1_0.stl"/> <!-- 引用名为wrist1_0.stl的网格文件 -->
+    <mesh file="wrist1_1.stl"/> <!-- 引用名为wrist1_1.stl的网格文件 -->
+    <mesh file="wrist1_2.stl"/> <!-- 引用名为wrist1_2.stl的网格文件 -->
+    <mesh file="wrist2_0.stl"/> <!-- 引用名为wrist2_0.stl的网格文件 -->
+    <mesh file="wrist2_1.stl"/> <!-- 引用名为wrist2_1.stl的网格文件 -->
+    <mesh file="wrist2_2.stl"/> <!-- 引用名为wrist2_2.stl的网格文件 -->
+    <mesh file="wrist3.stl"/> <!-- 引用名为wrist3.stl的网格文件 -->
   </asset>
-
-  <worldbody>
-    <light name="spotlight" mode="targetbodycom" target="wrist_2_link" pos="0 -1 2"/>
-    <body name="base" pos="0 -0.5 0" quat="1 0 0 0" childclass="ur5e">
-      <inertial mass="4.0" pos="0 0 0" diaginertia="0.00443333156 0.00443333156 0.0072"/>
-      <geom mesh="base_0" material="black" class="visual"/>
-      <geom mesh="base_1" material="jointgray" class="visual"/>
-      <body name="shoulder_link" pos="0 0 0.163">
-        <inertial mass="3.7" pos="0 0 0" diaginertia="0.0102675 0.0102675 0.00666"/>
-        <joint name="shoulder_pan_joint" class="size3" axis="0 0 1"/>
-        <geom mesh="shoulder_0" material="urblue" class="visual"/>
-        <geom mesh="shoulder_1" material="black" class="visual"/>
-        <geom mesh="shoulder_2" material="jointgray" class="visual"/>
-        <geom class="collision" size="0.06 0.06" pos="0 0 -0.04"/>
-        <body name="upper_arm_link" pos="0 0.138 0" quat="1 0 0 0">
-          <inertial mass="8.393" pos="0 0 0.2125" diaginertia="0.133886 0.133886 0.0151074"/>
-          <joint name="shoulder_lift_joint" class="size3"/>
-          <geom mesh="upperarm_0" material="linkgray" class="visual"/>
-          <geom mesh="upperarm_1" material="black" class="visual"/>
-          <geom mesh="upperarm_2" material="jointgray" class="visual"/>
-          <geom mesh="upperarm_3" material="urblue" class="visual"/>
-          <geom class="collision" pos="0 -0.04 0" quat="1 1 0 0" size="0.06 0.06"/>
-          <geom class="collision" size="0.05 0.2" pos="0 0 0.2"/>
-          <body name="forearm_link" pos="0 -0.131 0.425">
-            <inertial mass="2.275" pos="0 0 0.196" diaginertia="0.0311796 0.0311796 0.004095"/>
-            <joint name="elbow_joint" class="size3_limited"/>
-            <geom mesh="forearm_0" material="urblue" class="visual"/>
-            <geom mesh="forearm_1" material="linkgray" class="visual"/>
-            <geom mesh="forearm_2" material="black" class="visual"/>
-            <geom mesh="forearm_3" material="jointgray" class="visual"/>
-            <geom class="collision" pos="0 0.08 0" quat="1 1 0 0" size="0.055 0.06"/>
-            <geom class="collision" size="0.038 0.19" pos="0 0 0.2"/>
-            <body name="wrist_1_link" pos="0 0 0.392" quat="1 0 0 0">
-              <inertial mass="1.219" pos="0 0.127 0" diaginertia="0.0025599 0.0025599 0.0021942"/>
-              <joint name="wrist_1_joint" class="size1"/>
-              <geom mesh="wrist1_0" material="black" class="visual"/>
-              <geom mesh="wrist1_1" material="urblue" class="visual"/>
-              <geom mesh="wrist1_2" material="jointgray" class="visual"/>
-              <geom class="collision" pos="0 0.05 0" quat="1 1 0 0" size="0.04 0.07"/>
-              <body name="wrist_2_link" pos="0 0.127 0">
-                <inertial mass="1.219" pos="0 0 0.1" diaginertia="0.0025599 0.0021942 0.0025599"/>
-                <joint name="wrist_2_joint" axis="0 0 1" class="size1"/>
-                <geom mesh="wrist2_0" material="black" class="visual"/>
-                <geom mesh="wrist2_1" material="urblue" class="visual"/>
+  <worldbody> <!-- 定义模型的世界体部分，是所有物体的容器 -->
+    <light name="spotlight" mode="targetbodycom" target="wrist_2_link" pos="0 -1 2"/> <!-- 定义一个名为spotlight的光源，照射目标为wrist_2_link，位置在(0, -1, 2) -->
+    <body name="base" pos="0 -0.5 0" quat="1 0 0 0" childclass="ur5e"> <!-- 定义基座体，位置在(0, -0.5, 0)，无旋转，所有子体默认属于ur5e类 -->
+      <inertial mass="4.0" pos="0 0 0" diaginertia="0.00443333156 0.00443333156 0.0072"/> <!-- 基座的惯性属性：质量4.0kg，惯性张量对角线元素 -->
+      <geom mesh="base_0" material="black" class="visual"/> <!-- 基座的视觉属性，使用黑色材质和base_0网格 -->
+      <geom mesh="base_1" material="jointgray" class="visual"/> <!-- 同上，使用jointgray材质和base_1网格 -->
+      <body name="shoulder_link" pos="0 0 0.163"> <!-- 定义肩部链接，相对于基座的位置 -->
+        <inertial mass="3.7" pos="0 0 0" diaginertia="0.0102675 0.0102675 0.00666"/> <!-- 肩部链接的惯性属性 -->
+        <joint name="shoulder_pan_joint" class="size3" axis="0 0 1"/> <!-- 肩部的旋转关节，旋转轴为Z轴 -->
+        <geom mesh="shoulder_0" material="urblue" class="visual"/> <!-- 肩部的视觉属性，使用urblue材质和shoulder_0网格 -->
+        <geom mesh="shoulder_1" material="black" class="visual"/> <!-- 同上，使用black材质和shoulder_1网格 -->
+        <geom mesh="shoulder_2" material="jointgray" class="visual"/> <!-- 同上，使用jointgray材质和shoulder_2网格 -->
+        <geom class="collision" size="0.06 0.06" pos="0 0 -0.04"/> <!-- 肩部的碰撞属性，定义一个碰撞几何体 -->
+        <body name="upper_arm_link" pos="0 0.138 0" quat="1 0 0 0"> <!-- 定义上臂链接 -->
+          <inertial mass="8.393" pos="0 0 0.2125" diaginertia="0.133886 0.133886 0.0151074"/> <!-- 上臂的惯性属性 -->
+          <joint name="shoulder_lift_joint" class="size3"/> <!-- 上臂的升降关节，无具体旋转轴指定，采用默认设置 -->
+          <geom mesh="upperarm_0" material="linkgray" class="visual"/> <!-- 上臂的视觉属性，使用linkgray材质和upperarm_0网格 -->
+          <geom mesh="upperarm_1" material="black" class="visual"/> <!-- 同上，使用black材质和upperarm_1网格 -->
+          <geom mesh="upperarm_2" material="jointgray" class="visual"/> <!-- 同上，使用jointgray材质和upperarm_2网格 -->
+          <geom mesh="upperarm_3" material="urblue" class="visual"/> <!-- 同上，使用urblue材质和upperarm_3网格 -->
+          <geom class="collision" pos="0 -0.04 0" quat="1 1 0 0" size="0.06 0.06 0.06"/> <!-- 上臂的碰撞属性，定义了一个碰撞几何体，位置和旋转被指定 -->
+          <geom class="collision" size="0.05 0.2" pos="0 0 0.2"/> <!-- 定义另一个碰撞几何体，用于上臂 -->
+          <body name="forearm_link" pos="0 -0.131 0.425"> <!-- 定义前臂链接 -->
+            <inertial mass="2.275" pos="0 0 0.196" diaginertia="0.0311796 0.0311796 0.004095"/> <!-- 前臂的惯性属性 -->
+            <joint name="elbow_joint" class="size3_limited"/> <!-- 前臂的肘关节，限制了其大小 -->
+            <geom mesh="forearm_0" material="urblue" class="visual"/> <!-- 前臂的视觉属性，使用urblue材质和forearm_0网格 -->
+            <geom mesh="forearm_1" material="linkgray" class="visual"/> <!-- 同上，使用linkgray材质和forearm_1网格 -->
+            <geom mesh="forearm_2" material="black" class="visual"/> <!-- 同上，使用black材质和forearm_2网格 -->
+            <geom mesh="forearm_3" material="jointgray" class="visual"/> <!-- 同上，使用jointgray材质和forearm_3网格 -->
+            <geom class="collision" pos="0 0.08 0" quat="1 1 0 0" size="0.055 0.06"/> <!-- 前臂的碰撞属性，定义了一个碰撞几何体 -->
+            <geom class="collision" size="0.038 0.19" pos="0 0 0.2"/> <!-- 定义另一个碰撞几何体，用于前臂 -->
+            <body name="wrist_1_link" pos="0 0 0.392" quat="1 0 0 0"> <!-- 定义腕部1链接 -->
+              <inertial mass="1.219" pos="0 0.127 0" diaginertia="0.0025599 0.0025599 0.0021942"/> <!-- 腕部1的惯性属性 -->
+              <joint name="wrist_1_joint" class="size1"/> <!-- 腕部1的关节 -->
+              <geom mesh="wrist1_0" material="black" class="visual"/> <!-- 腕部1的视觉属性，使用black材质和wrist1_0网格 -->
+              <geom mesh="wrist1_1" material="urblue" class="visual"/> <!-- 同上，使用urblue材质和wrist1_1网格 -->
+              <geom mesh="wrist1_2" material="jointgray" class="visual"/> <!-- 同上，使用jointgray材质和wrist1_2网格 -->
+              <geom class="collision" pos="0 0.05 0" quat="1 1 0 0" size="0.04 0.07"/> <!-- 腕部1的碰撞属性 -->
+              <body name="wrist_2_link" pos="0 0.127 0"> <!-- 定义腕部2链接 -->
+                <inertial mass="1.219" pos="0 0 0.1" diaginertia="0.0025599 0.0021942 0.0025599"/> <!-- 腕部2的惯性属性 -->
+                <joint name="wrist_2_joint" axis="0 0 1" class="size1"/> <!-- 腕部2的关节，旋转轴为Z轴 -->
+                <geom mesh="wrist2_0" material="black" class="visual"/> <!-- 腕部2的视觉属性，使用black材质和wrist2_0网格 -->
+                <geom mesh="wrist2_1" material="urblue" class="visual"/> <!-- 同上，使用urblue材质和wrist2_1网格 -->
                 <geom mesh="wrist2_2" material="jointgray" class="visual"/>
                 <geom class="collision" size="0.04 0.06" pos="0 0 0.04"/>
                 <geom class="collision" pos="0 0.02 0.1" quat="1 1 0 0" size="0.04 0.04"/>
@@ -112,11 +106,6 @@
                   <geom material="linkgray" mesh="wrist3" class="visual"/>
                   <geom class="eef_collision" pos="0 0.08 0" quat="1 1 0 0" size="0.04 0.02"/>
                   <site name="attachment_site" pos="0 0.1 0" quat="-1 1 0 0"/>
-
-<!--                  <body name="tool" pos="0 0.1 0" quat="1 -1 0 0">-->
-<!--                    <geom type="cylinder" pos="0 0 0.002" size="0.03 0.002" />-->
-<!--                    <geom type="cylinder" pos="0 0 0.1" size="0.001 0.1" />-->
-<!--                  </body>-->
                 </body>
               </body>
             </body>
@@ -125,24 +114,4 @@
       </body>
     </body>
   </worldbody>
-
-  <actuator>
-<!--    <general class="size3" name="shoulder_pan" joint="shoulder_pan_joint"/>-->
-<!--    <general class="size3" name="shoulder_lift" joint="shoulder_lift_joint"/>-->
-<!--    <general class="size3_limited" name="elbow" joint="elbow_joint"/>-->
-<!--    <general class="size1" name="wrist_1" joint="wrist_1_joint"/>-->
-<!--    <general class="size1" name="wrist_2" joint="wrist_2_joint"/>-->
-<!--    <general class="size1" name="wrist_3" joint="wrist_3_joint"/>-->
-
-    <motor name="shoulder_pan" joint="shoulder_pan_joint"/>
-    <motor name="shoulder_lift" joint="shoulder_lift_joint"/>
-    <motor name="elbow" joint="elbow_joint"/>
-    <motor name="wrist_1" joint="wrist_1_joint"/>
-    <motor name="wrist_2" joint="wrist_2_joint"/>
-    <motor name="wrist_3" joint="wrist_3_joint"/>
-  </actuator>
-
-<!--  <keyframe>-->
-<!--    <key name="home" qpos="-1.5708 -1.5708 1.5708 -1.5708 -1.5708 0" ctrl="-1.5708 -1.5708 1.5708 -1.5708 -1.5708 0"/>-->
-<!--  </keyframe>-->
 </mujoco>

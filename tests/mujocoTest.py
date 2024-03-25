@@ -1,5 +1,4 @@
 import os
-import numpy as np
 
 # 添加MuJoCo库的DLL目录到系统路径
 os.add_dll_directory("C://Users//10501/.mujoco//mjpro150//bin")
